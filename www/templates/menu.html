@@ -1,34 +1,46 @@
-<ion-side-menus enable-menu-with-back-views="false">
+<ion-side-menus enable-menu-with-back-views="true">
   <ion-side-menu-content>
-    <ion-nav-bar class="bar-stable">
-      <ion-nav-back-button>
-      </ion-nav-back-button>
-
+    <ion-nav-bar class="bar-positive">
+      <ion-nav-back-button></ion-nav-back-button>
       <ion-nav-buttons side="left">
-        <button class="button button-icon button-clear ion-navicon" menu-toggle="left">
-        </button>
+        <button class="button button-icon button-clear ion-navicon" menu-toggle="left"></button>
       </ion-nav-buttons>
     </ion-nav-bar>
-    <ion-nav-view name="menuContent"></ion-nav-view>
+    <ion-nav-view name="side-menu"></ion-nav-view>
   </ion-side-menu-content>
-
-  <ion-side-menu side="left">
-    <ion-header-bar class="bar-stable">
-      <h1 class="title">Left</h1>
+  <ion-side-menu side="left" id="side-menu" style="background-color:#FFFFFF;">
+    <ion-header-bar class="bar-positive">
+      <div class="title">Menu</div>
     </ion-header-bar>
-    <ion-content>
-      <ion-list>
-        <ion-item menu-close ng-click="login()">
-          Login
+    <ion-content padding="false" class="side-menu-left has-header" ng-controller="menuCtrl">
+      <ion-list id="menu-list1">
+        <ion-item class="item-icon-left positive corIRM" id="menu-list-item1" ui-sref="menu.inicio()" menu-close="">
+          <i class="icon ion-home"></i>Início</ion-item>
+        <ion-item class="item-icon-left positive corIRM" id="menu-list-item2" ui-sref="menu.quemSomos()" menu-close="">
+          <i class="icon ion-information-circled"></i>Quem Somos</ion-item>
+        <ion-item class="item-icon-left positive corIRM" id="menu-list-item3" ui-sref="menu.audiosAnteriores()" menu-close="">
+          <i class="icon ion-music-note"></i>Áudios Anteriores</ion-item>
+        <!--<ion-item class="item-icon-left positive corIRM" id="menu-list-item3" ui-sref="menu.audiosSalvos()" menu-close="">
+          <i class="icon ion-android-bookmark"></i>Áudios Salvos</ion-item>-->
+        <ion-item class="item-icon-left positive corIRM" id="menu-list-item4" ui-sref="menu.agenda()" menu-close="">
+          <i class="icon ion-android-calendar"></i>Agenda e Contato</ion-item>
+        <ion-item class="item-icon-left positive corIRM" id="menu-list-item4" ui-sref="menu.documento()" menu-close="" ng-if="getUsuarioLogado()">
+          <i class="icon ion-document-text"></i>Documento</ion-item>
+        <!--<ion-item class="item-icon-left positive corIRM" id="menu-list-item5" ui-sref="menu.contato()" menu-close="">
+          <i class="icon ion-android-contact"></i>Contato</ion-item>-->
+        <ion-item class="item-icon-left positive corIRM" id="menu-list-item5" ui-sref="menu.perfil()" menu-close="" ng-if="getUsuarioLogado()">
+          <i class="icon ion-edit"></i>Meu Perfil</ion-item>
+        <ion-item class="item-icon-left positive corIRM" id="menu-list-item6" ng-click="sair()" ui-sref="menu.login" ng-if="getUsuarioLogado()" menu-close="">
+          <i class="icon ion-log-out"></i>Sair</ion-item>
+        <ion-item class="item-icon-left positive corIRM" id="menu-list-item7" ui-sref="menu.login()" menu-close="" ng-if="!getUsuarioLogado()">
+          <i class="icon ion-log-in"></i>Entrar</ion-item>
+        <ion-item class="item-icon-left positive corIRM" id="menu-list-item8" ui-sref="menu.cadastro()" menu-close="" ng-if="!getUsuarioLogado()">
+          <i class="icon ion-person-add"></i>Cadastrar</ion-item>
+        <ion-item class="item item-image" menu-close="">
+          <img ng-src="img/img_app.png">
         </ion-item>
-        <ion-item menu-close href="#/app/search">
-          Search
-        </ion-item>
-        <ion-item menu-close href="#/app/browse">
-          Browse
-        </ion-item>
-        <ion-item menu-close href="#/app/playlists">
-          Playlists
+        <ion-item class="item item-text" menu-close="">
+          <span style="color: #999999; font-size: 12px;">Ricardo Melo</span>
         </ion-item>
       </ion-list>
     </ion-content>

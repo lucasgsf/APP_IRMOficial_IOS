@@ -1,0 +1,3 @@
+jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore "C:\Users\T-Gamer\source\repos\APP_IRMOficial\platforms\android\app\build\outputs\apk\release\IRMOficial.keystore" "C:\Users\T-Gamer\source\repos\APP_IRMOficial\platforms\android\app\build\outputs\apk\release\app-release-unsigned.apk" IRMOficial
+
+zipalign -v 4 "C:\Users\T-Gamer\source\repos\APP_IRMOficial\platforms\android\app\build\outputs\apk\release\app-release-unsigned.apk" "C:\Users\T-Gamer\source\repos\APP_IRMOficial\platforms\android\app\build\outputs\apk\release\IRMOficial_0.y.z.apk"

@@ -1,0 +1,78 @@
+<ion-view title="Post" hide-back-button="true" id="page1" style="background-color:#FFFFFF;">
+  <ion-content padding="true" class="has-header">
+
+    <div class="row">
+      <div class="col-25">
+      </div>
+      <div class="col-50" ui-sref="menu.inicio()">
+        <center><span class="corIRM">Voltar</span></center>
+      </div>
+      <div class="col-25">
+      </div>
+    </div>
+
+    <div class="list card" ng-if="post != undefined && post != null">
+      <ion-item class="item-icon-left positive" ng-if="post.ID_TIPO_POST == 1">
+        <i class="icon ion-android-bulb"></i>{{post.DS_TIPO_POST}} - {{post.DS_IDIOMA}}
+      </ion-item>
+      <ion-item class="item-icon-left balanced" ng-if="post.ID_TIPO_POST >= 2">
+        <i class="icon ion-android-favorite"></i>{{post.DS_TIPO_POST}} - {{post.DS_IDIOMA}}
+      </ion-item>
+      <div class="item item-image">
+        <img ng-src="data:image/png;base64,{{post.IM_IMAGEM}}" style="display: block; width: 100%; height: auto; margin-left: auto; margin-right: auto;">
+      </div>
+      <div class="item item-body" id="inicio-list-item-container3">
+        <div class="show-list-numbers-and-dots">
+          <p style="margin-top:0px;color:#437CF5;font-size:16px;" ng-if="post.ID_TIPO_POST == 1">
+            <strong>{{post.DS_TITULO}}</strong>
+          </p>
+          <p style="margin-top:0px;color:#3CB846;font-size:16px;" ng-if="post.ID_TIPO_POST >= 2">
+            <strong>{{post.DS_TITULO}}</strong>
+          </p>
+        </div>
+        <div class="show-list-numbers-and-dots">
+          <p style="margin-top:0px;color:#020202;font-size:11px;">{{post.DS_POST}}</p>
+        </div>
+      </div>
+      <ion-item class="item item-body">
+        <div class="show-list-numbers-and-dots">
+          <p style="margin-top:0px;color:#020202;font-size:11px;">Após clicar play, aguarde o áudio ser carregado.</p>
+        </div>
+      </ion-item>
+      <ion-item>
+        <div class="row">
+          <div class="col" ng-click="playAudioPost(post)" ng-if="!playing">
+            <center>
+              <a style="font-size: 45px;">
+                <i class="icon ion-play" ng-class="{ 'positive': (post.ID_TIPO_POST == 1), 'balanced': (post.ID_TIPO_POST >= 2)}"></i>
+              </a>
+            </center>
+          </div>
+          <div class="col" ng-click="pauseAudioPost(post)" ng-if="playing">
+            <center>
+              <a style="font-size: 45px;">
+                <i class="icon ion-pause" ng-class="{ 'positive': (post.ID_TIPO_POST == 1), 'balanced': (post.ID_TIPO_POST >= 2)}"></i>
+              </a>
+            </center>
+          </div>
+        </div>
+      </ion-item>
+      <div id="inicio-button-bar1" class="button-bar">
+        <button ng-click="curtirPost(post)" class="button button-stable button-block button-clear"><i class="icon ion-thumbsup" ng-class="{ 'positive': getCurtirPost(post) && post.ID_TIPO_POST == 1, 'balanced': getCurtirPost(post) && post.ID_TIPO_POST >= 2 }"></i>&nbsp;({{post.NR_CURTIDAS}})</button>
+        <button ng-click="compartilharPost(post)" class="button button-stable button-block button-clear"><i class="icon ion-android-share" ng-class="{ 'positive': getCompartilharPost(post) && post.ID_TIPO_POST == 1, 'balanced': getCompartilharPost(post) && post.ID_TIPO_POST >= 2 }"></i>&nbsp;({{post.NR_COMPARTILHAMENTOS}})</button>
+      </div>
+    </div>
+
+    <!-- Dúvidas e Sugestões -->
+    <div class="list card">
+      <ion-item class="corIRM">
+        <b>Dúvidas? Sugestões? Contate-nos</b>
+      </ion-item>
+      <ion-item class="item-icon-left corIRM">
+        <!--<i class="icon ion-social-whatsapp-outline"></i>+55 31 99181 7789-->
+        <i class="icon ion-android-mail"></i>irmoficialapp@gmail.com
+      </ion-item>
+    </div>
+
+  </ion-content>
+</ion-view>

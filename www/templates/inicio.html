@@ -1,0 +1,221 @@
+<ion-view title="Início" hide-back-button="true" id="page1" style="background-color:#FFFFFF;">
+  <ion-content padding="true" class="has-header">
+    <ion-refresher on-refresh="doRefresh()"></ion-refresher>
+
+    <div class="row">
+      <div class="col-25" ng-click="setData(-1)">
+        <center>Ontem</center>
+      </div>
+      <div class="col-50">
+        <center><span class="corIRM">{{dataText}}</span></center>
+      </div>
+      <div class="col-25" ng-click="setData(1)">
+        <center>Amanhã</center>
+      </div>
+    </div>
+
+    <!-- 1 -->
+    <div class="list card" ng-if="lstConteudos[0].ID_CONTEUDO">
+      <ion-item class="item-icon-left positive" ng-if="lstConteudos[0].FL_VIDEO">
+        <i class="icon ion-social-youtube"></i>{{lstConteudos[0].DS_CONTEUDO}}
+      </ion-item>
+      <ion-item class="item-icon-left positive" ng-if="!lstConteudos[0].FL_VIDEO && lstConteudos[0].DS_LINK" href-inappbrowser="{{lstConteudos[0].DS_LINK}}">
+        <i class="icon ion-navigate"></i>Clique aqui para acessar!
+      </ion-item>
+      <div class="item item-image" ng-if="lstConteudos[0].FL_VIDEO">
+        <div style="position:relative;overflow:hidden;padding-bottom:56.25%;height:0;">
+          <iframe src="{{lstConteudos[0].DS_LINK}}" frameborder="0" allowfullscreen="" width="560" height="315" style="position:absolute;top:0;left:0;width:100%;height:100%;"></iframe>
+        </div>
+      </div>
+      <div class="item item-image" ng-if="!lstConteudos[0].FL_VIDEO && lstConteudos[0].DS_LINK" href-inappbrowser="{{lstConteudos[0].DS_LINK}}">
+        <img ng-if="lstConteudos[0].IM_IMAGEM" ng-src="data:image/png;base64,{{lstConteudos[0].IM_IMAGEM}}" style="display: block; width: 100%; height: auto; margin-left: auto; margin-right: auto;">
+      </div>
+      <div class="item item-image" ng-if="!lstConteudos[0].FL_VIDEO && !lstConteudos[0].DS_LINK">
+        <img ng-if="lstConteudos[0].IM_IMAGEM" ng-src="data:image/png;base64,{{lstConteudos[0].IM_IMAGEM}}" style="display: block; width: 100%; height: auto; margin-left: auto; margin-right: auto;">
+      </div>
+      <div class="button-bar" ng-if="!lstConteudos[0].FL_VIDEO">
+        <button ng-click="curtirConteudo(lstConteudos[0])" class="button button-stable button-block button-clear"><i class="icon ion-thumbsup" ng-class="{ 'positive': getCurtirConteudo(lstConteudos[0]) }"></i>&nbsp;({{lstConteudos[0].NR_CURTIDAS}})</button>
+        <button ng-click="compartilharConteudo(lstConteudos[0].IM_IMAGEM)" class="button button-stable button-block button-clear"><i class="icon ion-android-share"></i> Compartilhar</button>
+      </div>
+    </div>
+
+    <!-- 2 e 3 -->
+    <div class="list card" ng-repeat="item in lstPostsFeed" ng-if="$index >= 0 && $index <= 1">
+      <ion-item class="item-icon-left positive" ng-if="item.ID_TIPO_POST == 1">
+        <i class="icon ion-android-bulb"></i>{{item.DS_TIPO_POST}} - {{item.DS_IDIOMA}}
+      </ion-item>
+      <ion-item class="item-icon-left balanced" ng-if="item.ID_TIPO_POST >= 2">
+        <i class="icon ion-android-favorite"></i>{{item.DS_TIPO_POST}} - {{item.DS_IDIOMA}}
+      </ion-item>
+      <div class="item item-image">
+        <img ng-src="data:image/png;base64,{{item.IM_IMAGEM}}" style="display: block; width: 100%; height: auto; margin-left: auto; margin-right: auto;">
+      </div>
+      <div class="item item-body" id="inicio-list-item-container3">
+        <div class="show-list-numbers-and-dots">
+          <p style="margin-top:0px;color:#437CF5;font-size:16px;" ng-if="item.ID_TIPO_POST == 1">
+            <strong>{{item.DS_TITULO}}</strong>
+          </p>
+          <p style="margin-top:0px;color:#3CB846;font-size:16px;" ng-if="item.ID_TIPO_POST >= 2">
+            <strong>{{item.DS_TITULO}}</strong>
+          </p>
+        </div>
+        <div class="show-list-numbers-and-dots">
+          <p style="margin-top:0px;color:#020202;font-size:11px;">{{item.DS_POST}}</p>
+        </div>
+      </div>
+      <div class="item item-body" ng-click="goToAudio(item)">
+        <p style="margin-top:0px;color:#437CF5;font-size:16px;" ng-if="item.ID_TIPO_POST == 1">
+          <strong><i class="icon ion-music-note"></i>  Clique aqui para Escutar o Áudio</strong>
+        </p>
+        <p style="margin-top:0px;color:#3CB846;font-size:16px;" ng-if="item.ID_TIPO_POST >= 2">
+          <strong><i class="icon ion-music-note"></i>  Clique aqui para Escutar o Áudio</strong>
+        </p>
+      </div>
+    </div>
+
+    <!-- 4 -->
+    <div class="list card" ng-if="lstConteudos[1].ID_CONTEUDO">
+      <ion-item class="item-icon-left positive" ng-if="lstConteudos[1].FL_VIDEO">
+        <i class="icon ion-social-youtube"></i>{{lstConteudos[1].DS_CONTEUDO}}
+      </ion-item>
+      <ion-item class="item-icon-left positive" ng-if="!lstConteudos[1].FL_VIDEO && lstConteudos[1].DS_LINK" href-inappbrowser="{{lstConteudos[1].DS_LINK}}">
+        <i class="icon ion-navigate"></i>Clique aqui para acessar!
+      </ion-item>
+      <div class="item item-image" ng-if="lstConteudos[1].FL_VIDEO">
+        <div style="position:relative;overflow:hidden;padding-bottom:56.25%;height:0;">
+          <iframe src="{{lstConteudos[1].DS_LINK}}" frameborder="0" allowfullscreen="" width="560" height="315" style="position:absolute;top:0;left:0;width:100%;height:100%;"></iframe>
+        </div>
+      </div>
+      <div class="item item-image" ng-if="!lstConteudos[1].FL_VIDEO && lstConteudos[1].DS_LINK" href-inappbrowser="{{lstConteudos[1].DS_LINK}}">
+        <img ng-if="lstConteudos[1].IM_IMAGEM" ng-src="data:image/png;base64,{{lstConteudos[1].IM_IMAGEM}}" style="display: block; width: 100%; height: auto; margin-left: auto; margin-right: auto;">
+      </div>
+      <div class="item item-image" ng-if="!lstConteudos[1].FL_VIDEO && !lstConteudos[1].DS_LINK">
+        <img ng-if="lstConteudos[1].IM_IMAGEM" ng-src="data:image/png;base64,{{lstConteudos[1].IM_IMAGEM}}" style="display: block; width: 100%; height: auto; margin-left: auto; margin-right: auto;">
+      </div>
+      <div class="button-bar" ng-if="!lstConteudos[1].FL_VIDEO">
+        <button ng-click="curtirConteudo(lstConteudos[1])" class="button button-stable button-block button-clear"><i class="icon ion-thumbsup" ng-class="{ 'positive': getCurtirConteudo(lstConteudos[1]) }"></i>&nbsp;({{lstConteudos[1].NR_CURTIDAS}})</button>
+        <button ng-click="compartilharConteudo(lstConteudos[1].IM_IMAGEM)" class="button button-stable button-block button-clear"><i class="icon ion-android-share"></i> Compartilhar</button>
+      </div>
+    </div>
+
+    <!-- 5 -->
+    <div class="list card" ng-if="lstConteudos[2].ID_CONTEUDO">
+      <ion-item class="item-icon-left positive" ng-if="lstConteudos[2].FL_VIDEO">
+        <i class="icon ion-social-youtube"></i>{{lstConteudos[2].DS_CONTEUDO}}
+      </ion-item>
+      <ion-item class="item-icon-left positive" ng-if="!lstConteudos[2].FL_VIDEO && lstConteudos[2].DS_LINK" href-inappbrowser="{{lstConteudos[2].DS_LINK}}">
+        <i class="icon ion-navigate"></i>Clique aqui para acessar!
+      </ion-item>
+      <div class="item item-image" ng-if="lstConteudos[2].FL_VIDEO">
+        <div style="position:relative;overflow:hidden;padding-bottom:56.25%;height:0;">
+          <iframe src="{{lstConteudos[2].DS_LINK}}" frameborder="0" allowfullscreen="" width="560" height="315" style="position:absolute;top:0;left:0;width:100%;height:100%;"></iframe>
+        </div>
+      </div>
+      <div class="item item-image" ng-if="!lstConteudos[2].FL_VIDEO && lstConteudos[2].DS_LINK" href-inappbrowser="{{lstConteudos[2].DS_LINK}}">
+        <img ng-if="lstConteudos[2].IM_IMAGEM" ng-src="data:image/png;base64,{{lstConteudos[2].IM_IMAGEM}}" style="display: block; width: 100%; height: auto; margin-left: auto; margin-right: auto;">
+      </div>
+      <div class="item item-image" ng-if="!lstConteudos[2].FL_VIDEO && !lstConteudos[2].DS_LINK">
+        <img ng-if="lstConteudos[2].IM_IMAGEM" ng-src="data:image/png;base64,{{lstConteudos[2].IM_IMAGEM}}" style="display: block; width: 100%; height: auto; margin-left: auto; margin-right: auto;">
+      </div>
+      <div class="button-bar" ng-if="!lstConteudos[2].FL_VIDEO">
+        <button ng-click="curtirConteudo(lstConteudos[2])" class="button button-stable button-block button-clear"><i class="icon ion-thumbsup" ng-class="{ 'positive': getCurtirConteudo(lstConteudos[2]) }"></i>&nbsp;({{lstConteudos[1].NR_CURTIDAS}})</button>
+        <button ng-click="compartilharConteudo(lstConteudos[2].IM_IMAGEM)" class="button button-stable button-block button-clear"><i class="icon ion-android-share"></i> Compartilhar</button>
+      </div>
+    </div>
+
+    <!-- 6 -->
+    <div class="list card" ng-if="lstConteudos[6].ID_CONTEUDO">
+      <ion-item class="item-icon-left positive" ng-if="lstConteudos[3].FL_VIDEO">
+        <i class="icon ion-social-youtube"></i>{{lstConteudos[3].DS_CONTEUDO}}
+      </ion-item>
+      <ion-item class="item-icon-left positive" ng-if="!lstConteudos[3].FL_VIDEO && lstConteudos[3].DS_LINK" href-inappbrowser="{{lstConteudos[3].DS_LINK}}">
+        <i class="icon ion-navigate"></i>Clique aqui para acessar!
+      </ion-item>
+      <div class="item item-image" ng-if="lstConteudos[3].FL_VIDEO">
+        <div style="position:relative;overflow:hidden;padding-bottom:56.25%;height:0;">
+          <iframe src="{{lstConteudos[3].DS_LINK}}" frameborder="0" allowfullscreen="" width="560" height="315" style="position:absolute;top:0;left:0;width:100%;height:100%;"></iframe>
+        </div>
+      </div>
+      <div class="item item-image" ng-if="!lstConteudos[3].FL_VIDEO && lstConteudos[3].DS_LINK" href-inappbrowser="{{lstConteudos[3].DS_LINK}}">
+        <img ng-if="lstConteudos[3].IM_IMAGEM" ng-src="data:image/png;base64,{{lstConteudos[3].IM_IMAGEM}}" style="display: block; width: 100%; height: auto; margin-left: auto; margin-right: auto;">
+      </div>
+      <div class="item item-image" ng-if="!lstConteudos[3].FL_VIDEO && !lstConteudos[3].DS_LINK">
+        <img ng-if="lstConteudos[3].IM_IMAGEM" ng-src="data:image/png;base64,{{lstConteudos[3].IM_IMAGEM}}" style="display: block; width: 100%; height: auto; margin-left: auto; margin-right: auto;">
+      </div>
+      <div class="button-bar" ng-if="!lstConteudos[3].FL_VIDEO">
+        <button ng-click="curtirConteudo(lstConteudos[3])" class="button button-stable button-block button-clear"><i class="icon ion-thumbsup" ng-class="{ 'positive': getCurtirConteudo(lstConteudos[3]) }"></i>&nbsp;({{lstConteudos[3].NR_CURTIDAS}})</button>
+        <button ng-click="compartilharConteudo(lstConteudos[3].IM_IMAGEM)" class="button button-stable button-block button-clear"><i class="icon ion-android-share"></i> Compartilhar</button>
+      </div>
+    </div>
+
+    <!-- 7, 8 e 9 -->
+    <div class="list card" ng-repeat="item in lstPostsFeed" ng-if="$index >= 2">
+      <ion-item class="item-icon-left positive" ng-if="item.ID_TIPO_POST == 1">
+        <i class="icon ion-android-bulb"></i>{{item.DS_TIPO_POST}} - {{item.DS_IDIOMA}}
+      </ion-item>
+      <ion-item class="item-icon-left balanced" ng-if="item.ID_TIPO_POST >= 2">
+        <i class="icon ion-android-favorite"></i>{{item.DS_TIPO_POST}} - {{item.DS_IDIOMA}}
+      </ion-item>
+      <div class="item item-image">
+        <img ng-src="data:image/png;base64,{{item.IM_IMAGEM}}" style="display: block; width: 100%; height: auto; margin-left: auto; margin-right: auto;">
+      </div>
+      <div class="item item-body" id="inicio-list-item-container3">
+        <div class="show-list-numbers-and-dots">
+          <p style="margin-top:0px;color:#437CF5;font-size:16px;" ng-if="item.ID_TIPO_POST == 1">
+            <strong>{{item.DS_TITULO}}</strong>
+          </p>
+          <p style="margin-top:0px;color:#3CB846;font-size:16px;" ng-if="item.ID_TIPO_POST >= 2">
+            <strong>{{item.DS_TITULO}}</strong>
+          </p>
+        </div>
+        <div class="show-list-numbers-and-dots">
+          <p style="margin-top:0px;color:#020202;font-size:11px;">{{item.DS_POST}}</p>
+        </div>
+      </div>
+      <div class="item item-body" ng-click="goToAudio(item)">
+        <p style="margin-top:0px;color:#437CF5;font-size:16px;" ng-if="item.ID_TIPO_POST == 1">
+          <strong><i class="icon ion-music-note"></i>  Clique aqui para Escutar o Áudio</strong>
+        </p>
+        <p style="margin-top:0px;color:#3CB846;font-size:16px;" ng-if="item.ID_TIPO_POST >= 2">
+          <strong><i class="icon ion-music-note"></i>  Clique aqui para Escutar o Áudio</strong>
+        </p>
+      </div>
+    </div>
+
+    <!-- 10 -->
+    <div class="list card" ng-repeat="item in lstConteudos" ng-if="$index >= 4">
+      <ion-item class="item-icon-left positive" ng-if="item.FL_VIDEO">
+        <i class="icon ion-social-youtube"></i>{{item.DS_CONTEUDO}}
+      </ion-item>
+      <ion-item class="item-icon-left positive" ng-if="!item.FL_VIDEO && item.DS_LINK" href-inappbrowser="{{item.DS_LINK}}">
+        <i class="icon ion-navigate"></i>Clique aqui para acessar!
+      </ion-item>
+      <div class="item item-image" ng-if="item.FL_VIDEO">
+        <div style="position:relative;overflow:hidden;padding-bottom:56.25%;height:0;">
+          <iframe src="{{item.DS_LINK}}" frameborder="0" allowfullscreen="" width="560" height="315" style="position:absolute;top:0;left:0;width:100%;height:100%;"></iframe>
+        </div>
+      </div>
+      <div class="item item-image" ng-if="!item.FL_VIDEO && item.DS_LINK" href-inappbrowser="{{item.DS_LINK}}">
+        <img ng-if="item.IM_IMAGEM" ng-src="data:image/png;base64,{{item.IM_IMAGEM}}" style="display: block; width: 100%; height: auto; margin-left: auto; margin-right: auto;">
+      </div>
+      <div class="item item-image" ng-if="!item.FL_VIDEO && !item.DS_LINK">
+        <img ng-if="item.IM_IMAGEM" ng-src="data:image/png;base64,{{item.IM_IMAGEM}}" style="display: block; width: 100%; height: auto; margin-left: auto; margin-right: auto;">
+      </div>
+      <div class="button-bar" ng-if="!item.FL_VIDEO">
+        <button ng-click="curtirConteudo(item)" class="button button-stable button-block button-clear"><i class="icon ion-thumbsup" ng-class="{ 'positive': getCurtirConteudo(item) }"></i>&nbsp;({{item.NR_CURTIDAS}})</button>
+        <button ng-click="compartilharConteudo(item.IM_IMAGEM)" class="button button-stable button-block button-clear"><i class="icon ion-android-share"></i> Compartilhar</button>
+      </div>
+    </div>
+
+    <!-- Dúvidas e Sugestões -->
+    <div class="list card">
+      <ion-item class="corIRM">
+        <b>Dúvidas? Sugestões? Contate-nos</b>
+      </ion-item>
+      <ion-item class="item-icon-left corIRM">
+        <!--<i class="icon ion-social-whatsapp-outline"></i>+55 31 99181 7789-->
+        <i class="icon ion-android-mail"></i>irmoficialapp@gmail.com
+      </ion-item>
+    </div>
+  </ion-content>
+</ion-view>

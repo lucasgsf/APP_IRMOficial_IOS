@@ -1,0 +1,14 @@
+<ion-view title="Recuperar Senha" hide-back-button="false">
+  <ion-content padding="true" class="has-header">
+    <form id="form" name="form" novalidate="novalidate" class="list">
+      <ion-list id="login-list3">
+        <label class="item item-input" id="login-input1">
+          <span class="input-label">Email</span>
+          <input ng-model="usuario.DS_EMAIL" type="email" placeholder="">
+        </label>
+      </ion-list>
+      <div class="spacer" style="height: 40px;"></div>
+      <button class="button button-positive button-block" ng-disabled="form.$invalid" ng-click="recuperarSenha(usuario)">Recuperar Senha</button>
+    </form>
+  </ion-content>
+</ion-view>

@@ -1,0 +1,44 @@
+<ion-view title="Áudios Anteriores" id="page5" style="background-color:#FFFFFF;">
+  <ion-content padding="true" class="has-header">
+
+    <form id="audiosAnteriores-form3" class="list">
+      <label class="item item-input" id="audiosAnteriores-input5">
+        <span class="input-label">Data</span>
+        <input type="date" placeholder="" ng-model="dataBusca" ng-change="buscaPosts(dataBusca)">
+      </label>
+    </form>
+    
+    <div class="list card" ng-repeat="item in lstPostsFeed">
+      <ion-item class="item-icon-left positive" ng-if="item.ID_TIPO_POST == 1">
+        <i class="icon ion-android-bulb"></i>{{item.DS_TIPO_POST}} - {{item.DS_IDIOMA}}
+      </ion-item>
+      <ion-item class="item-icon-left balanced" ng-if="item.ID_TIPO_POST >= 2">
+        <i class="icon ion-android-favorite"></i>{{item.DS_TIPO_POST}} - {{item.DS_IDIOMA}}
+      </ion-item>
+      <div class="item item-image">
+        <img ng-src="data:image/png;base64,{{item.IM_IMAGEM}}" style="display: block; width: 100%; height: auto; margin-left: auto; margin-right: auto;">
+      </div>
+      <div class="item item-body" id="inicio-list-item-container3">
+        <div class="show-list-numbers-and-dots">
+          <p style="margin-top:0px;color:#437CF5;font-size:16px;" ng-if="item.ID_TIPO_POST == 1">
+            <strong>{{item.DS_TITULO}}</strong>
+          </p>
+          <p style="margin-top:0px;color:#3CB846;font-size:16px;" ng-if="item.ID_TIPO_POST >= 2">
+            <strong>{{item.DS_TITULO}}</strong>
+          </p>
+        </div>
+        <div class="show-list-numbers-and-dots">
+          <p style="margin-top:0px;color:#020202;font-size:11px;">{{item.DS_POST}}</p>
+        </div>
+      </div>
+      <div class="item item-body" ng-click="goToAudio(item)">
+        <p style="margin-top:0px;color:#437CF5;font-size:16px;" ng-if="item.ID_TIPO_POST == 1">
+          <strong><i class="icon ion-music-note"></i>  Clique aqui para Escutar o Áudio</strong>
+        </p>
+        <p style="margin-top:0px;color:#3CB846;font-size:16px;" ng-if="item.ID_TIPO_POST >= 2">
+          <strong><i class="icon ion-music-note"></i>  Clique aqui para Escutar o Áudio</strong>
+        </p>
+      </div>
+    </div>
+  </ion-content>
+</ion-view>

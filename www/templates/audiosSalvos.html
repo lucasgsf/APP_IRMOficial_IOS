@@ -1,0 +1,38 @@
+<ion-view title="Áudios Salvos" id="page5" style="background-color:#FFFFFF;">
+  <ion-content padding="true" class="has-header">
+    <sound-manager></sound-manager>
+    <div class="list card" ng-repeat="item in lstPostsFeed">
+      <ion-item class="item-icon-left positive" ng-if="item.ID_TIPO_POST == 1">
+        <i class="icon ion-android-bulb"></i>{{item.DS_TIPO_POST}} - {{item.DS_IDIOMA}}
+      </ion-item>
+      <ion-item class="item-icon-left balanced" ng-if="item.ID_TIPO_POST >= 2">
+        <i class="icon ion-android-favorite"></i>{{item.DS_TIPO_POST}} - {{item.DS_IDIOMA}}
+      </ion-item>
+      <div class="item item-body" id="inicio-list-item-container3">
+        <div id="inicio-markdown4" class="show-list-numbers-and-dots">
+          <p style="margin-top:0px;color:#437CF5;font-size:16px;" ng-if="item.ID_TIPO_POST == 1">
+            <strong>{{item.DS_TITULO}}</strong>
+          </p>
+          <p style="margin-top:0px;color:#3CB846;font-size:16px;" ng-if="item.ID_TIPO_POST >= 2">
+            <strong>{{item.DS_TITULO}}</strong>
+          </p>
+        </div>
+        <div id="inicio-markdown5" class="show-list-numbers-and-dots">
+          <p style="margin-top:0px;color:#020202;font-size:11px;">{{item.DS_POST}}</p>
+        </div>
+      </div>
+      <ion-item class="item-icon-left" style="height: 20px;">
+        <a ng-click="playAudioPost(item)"><i class="icon" ng-class="{ 'ion-play': (item.ID_POST != playingId || pause), 'ion-pause': (item.ID_POST == playingId && !pause), 'positive': (item.ID_TIPO_POST == 1), 'balanced': (item.ID_TIPO_POST == 2)}"></i></a>
+        <div class="seekBase" seek-track="">
+          <div class="seekLoad" ng-class="{ 'momento': item.ID_TIPO_POST == 1, 'pilula': item.ID_TIPO_POST >= 2 }" ng-style="{ width : ( progress + '%' ) }" ng-show="item.ID_POST == playingId && !pause"></div>
+        </div>
+      </ion-item>
+      <div id="inicio-button-bar1" class="button-bar">
+        <button ng-click="excluirPost(item, $index)" id="inicio-button4" class="button button-stable button-block button-clear"><i class="icon ion-trash-a"></i></button>
+      </div>
+    </div>
+    <div ng-if="lstPostsFeed.length == 0">
+      <center><p>Não existem áudios salvos.</p></center>
+    </div>
+  </ion-content>
+</ion-view>

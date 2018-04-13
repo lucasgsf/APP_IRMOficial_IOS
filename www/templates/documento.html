@@ -1,0 +1,23 @@
+<ion-view title="Documentos" hide-back-button="true" id="page1" style="background-color:#FFFFFF;">
+  <ion-content padding="true" class="has-header">
+    <ion-refresher on-refresh="doRefresh()"></ion-refresher>
+    <div class="list card" ng-repeat="item in lstDocumentos">
+      <ion-item class="item-icon-left positive" ng-if="item.FL_VIDEO">
+        <i class="icon ion-document-text"></i>Documento Exclusivo!
+      </ion-item>
+      <div class="item item-body" id="inicio-list-item-container3">
+        <div class="show-list-numbers-and-dots">
+          <p style="margin-top:0px;color:#437CF5;font-size:16px;">
+            <strong>{{item.DS_NOME}}</strong>
+          </p>
+        </div>
+        <div class="show-list-numbers-and-dots">
+          <p style="margin-top:0px;color:#020202;font-size:11px;">{{item.DS_DESCRICAO}}</p>
+        </div>
+      </div>
+      <div class="button-bar" ng-if="!item.FL_VIDEO">
+        <button ng-click="enviarDocumento(item)" class="button button-stable button-block button-clear"><i class="icon ion-email"></i> Quero receber esse arquivo exclusivo!</button>
+      </div>
+    </div>
+  </ion-content>
+</ion-view>

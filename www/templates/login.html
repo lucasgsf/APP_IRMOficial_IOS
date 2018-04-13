@@ -1,25 +1,23 @@
-<ion-modal-view>
-  <ion-header-bar>
-    <h1 class="title">Login</h1>
-    <div class="buttons">
-      <button class="button button-clear" ng-click="closeLogin()">Close</button>
+<ion-view title="Login" hide-back-button="true" id="page4">
+  <ion-content padding="true" class="has-header">
+    <div style="text-align: center; width: 100%; height: 150px; margin-top: 80px;">
+        <img ng-src="img/logo.png">
     </div>
-  </ion-header-bar>
-  <ion-content>
-    <form ng-submit="doLogin()">
-      <div class="list">
-        <label class="item item-input">
-          <span class="input-label">Username</span>
-          <input type="text" ng-model="loginData.username">
+    <form id="login-form1" class="list">
+      <ion-list id="login-list3">
+        <label class="item item-input" id="login-input1">
+          <span class="input-label">Email</span>
+          <input ng-model="usuario.DS_EMAIL" type="email" placeholder="">
         </label>
-        <label class="item item-input">
-          <span class="input-label">Password</span>
-          <input type="password" ng-model="loginData.password">
-        </label>
-        <label class="item">
-          <button class="button button-block button-positive" type="submit">Log in</button>
-        </label>
-      </div>
+        <!--<label class="item item-input" id="login-input2">
+          <span class="input-label">Senha</span>
+          <input ng-model="usuario.DS_SENHA" type="password" placeholder="">
+        </label>-->
+      </ion-list>
+      <div class="spacer" style="height: 40px;"></div>
+      <button ng-click="logar(usuario)" class="button button-stable button-block">Entrar</button>
+      <button ui-sref="menu.cadastro" class="button button-positive button-block button-clear">Criar uma conta</button>
+      <!--<button ui-sref="recuperarSenha" class="button button-positive button-block button-clear">Esqueci minha Senha</button>-->
     </form>
   </ion-content>
-</ion-modal-view>
+</ion-view>

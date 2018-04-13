@@ -5,36 +5,104 @@
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
     <title></title>
 
-    <link rel="manifest" href="manifest.json">
+    
+    
+    <script src="lib/ionic/js/ionic.bundle.js"></script>
 
-    <!-- un-comment this code to enable service worker
-    <script>
-      if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('service-worker.js')
-          .then(() => console.log('service worker installed'))
-          .catch(err => console.log('Error', err));
-      }
-    </script>-->
+    <script src="lib/oclazyload/dist/ocLazyLoad.min.js"></script>
 
-    <link href="lib/ionic/css/ionic.css" rel="stylesheet">
-    <link href="css/style.css" rel="stylesheet">
+    <!-- cordova script (this will be a 404 during development) -->
+    <script src="lib/ngCordova/dist/ng-cordova.min.js"></script>
+    <script src="cordova.js"></script>
 
     <!-- IF using Sass (run gulp sass first), then uncomment below and remove the CSS includes above
     <link href="css/ionic.app.css" rel="stylesheet">
     -->
 
-    <!-- ionic/angularjs js -->
-    <script src="lib/ionic/js/ionic.bundle.js"></script>
+    <link href="lib/ionic/css/ionic.css" rel="stylesheet">
 
-    <!-- cordova script (this will be a 404 during development) -->
-    <script src="cordova.js"></script>
+    <style type="text/css">
+      .platform-ios .manual-ios-statusbar-padding{
+        padding-top:20px;
+      }
+      .manual-remove-top-padding{
+        padding-top:0px; 
+      }
+      .manual-remove-top-padding .scroll{
+        padding-top:0px !important;
+      }
+      ion-list.manual-list-fullwidth div.list, .list.card.manual-card-fullwidth {
+        margin-left:-10px;
+        margin-right:-10px;
+      }
+      ion-list.manual-list-fullwidth div.list > .item, .list.card.manual-card-fullwidth > .item {
+        border-radius:0px;
+        border-left:0px;
+        border-right: 0px;
+      }
+      .show-list-numbers-and-dots ul{
+        list-style-type: disc;
+        padding-left:40px;
+      }
+      .show-list-numbers-and-dots ol{
+        list-style-type: decimal;
+        padding-left:40px;
+      }
+      .seekBase {
+        height: 5px;
+        width: 100%;
+        border: 1px solid #cccccc;
+        border-radius: 10%;
+      }
+      .seekLoad {
+        height: 5px;
+        width: 0;
+        border-radius: 10%;
+      }
+      .momento {
+        background-color: #437CF5;
+      }
+      .pilula{
+        background-color: #3CB846;
+      }
+      .has-error{
+        color: #FF0000;
+      }
+      .bar.bar-positive{
+        background-color: #004960 !important;
+      }
+      .bar.bar-positive .title{
+        color: #FFCC29 !important;
+      }
+      .corIRM{
+        color: #004960 !important;
+      }
+    </style>
 
-    <!-- your app's js -->
     <script src="js/app.js"></script>
     <script src="js/controllers.js"></script>
-  </head>
+    <script src="js/routes.js"></script>
+    
+    <script src="js/directives.js"></script>
+    <script src="js/services.js"></script>
 
-  <body ng-app="starter">
+    <script src="lib/angular-soundmanager2/dist/angular-soundmanager2.min.js"></script>
+    
+    <script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyCSemEtX9v5TUhPhyXIxCdzYI1OT6sPkIY&libraries=places&language=pt-BR"></script>
+
+    <!-- Only required for Tab projects w/ pages in multiple tabs 
+    <script src="lib/ionicuirouter/ionicUIRouter.js"></script>
+    -->
+
+  </head>
+  <body ng-app="app" animation="slide-left-right-ios7">
+  <div>
+  <div>
+    <ion-nav-bar class="bar-positive">
+      <ion-nav-back-button></ion-nav-back-button>
+    </ion-nav-bar>
     <ion-nav-view></ion-nav-view>
+  </div>
+</div>
   </body>
 </html>
