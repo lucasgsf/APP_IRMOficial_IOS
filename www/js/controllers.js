@@ -502,6 +502,7 @@ function ($scope, $rootScope, $sce, $ionicPlatform, $stateParams, $window, $time
 		$scope.dataText = $scope.data.toLocaleDateString();
 		$scope.usuario = ($window.localStorage["userData"] != undefined) ? JSON.parse($window.localStorage["userData"]) : undefined;
 		$scope.playing = false;
+		var iOSPlayOptions = { playAudioWhenScreenIsLocked : true };
 
 		$rootScope.$watch('post', function(newValue) {
 		    $scope.post = newValue;
@@ -510,7 +511,7 @@ function ($scope, $rootScope, $sce, $ionicPlatform, $stateParams, $window, $time
 
 		$scope.playAudioPost = function(item){
 			// Reproduz o áudio
-			$scope.media.play();
+			$scope.media.play(iOSPlayOptions);
 			$scope.playing = true;
 
 			// Salva Estatística
