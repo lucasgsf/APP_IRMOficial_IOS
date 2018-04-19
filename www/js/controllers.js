@@ -12,16 +12,32 @@ function ($scope, $state, $stateParams, $window, $ionicSideMenuDelegate) {
 	};
 }])
 
-.controller('inicioCtrl', ['$scope', '$rootScope', '$state', '$sce', '$ionicPlatform', '$stateParams', '$window', '$timeout', '$ionicPopup', '$filter', 'PostService', 'ConteudoService', 'AcoesPostService', '$cordovaFile', '$cordovaSocialSharing', 'BusyService', 'UsuarioService',
-function ($scope, $rootScope, $state, $sce, $ionicPlatform, $stateParams, $window, $timeout, $ionicPopup, $filter, PostService, ConteudoService, AcoesPostService, $cordovaFile, $cordovaSocialSharing, BusyService, UsuarioService) {
+.controller('inicioCtrl', ['$scope', '$rootScope', '$state', '$sce', '$ionicPlatform', '$stateParams', '$window', '$timeout', '$ionicPopup', '$filter', 'PostService', 'ConteudoService', 'AcoesPostService', '$cordovaFile', '$cordovaSocialSharing', 'BusyService', 'UsuarioService', 'AcoesConteudoService',
+function ($scope, $rootScope, $state, $sce, $ionicPlatform, $stateParams, $window, $timeout, $ionicPopup, $filter, PostService, ConteudoService, AcoesPostService, $cordovaFile, $cordovaSocialSharing, BusyService, UsuarioService, AcoesConteudoService) {
 	$ionicPlatform.ready(function() {
 		$scope.data = new Date();
 		$scope.data.setHours(0,0,0,0);
 		$scope.dataText = $scope.data.toLocaleDateString();
 		$scope.lstConteudos = {};
 		$scope.lstPostsFeed = {};
+		$scope.lstPostsFeedGerais = {};
+		$scope.lstConteudosGerais = {};
 		$scope.usuario = ($window.localStorage["userData"] != undefined) ? JSON.parse($window.localStorage["userData"]) : undefined;
 		$scope.playingId = 0;
+
+		$scope.filtrarFeed = function(tipo){
+			BusyService.show();
+			if(tipo == 0){
+				BusyService.hide();
+				$scope.lstPostsFeed = angular.copy($scope.lstPostsFeedGerais);
+				$scope.lstConteudos = angular.copy($scope.lstConteudosGerais);
+			}
+			else{
+				BusyService.hide();
+				$scope.lstPostsFeed = angular.copy($scope.lstPostsFeedGerais.filter(function(o){ return o.ID_TIPO_POST == tipo; }));
+				$scope.lstConteudos = null;
+			}
+		};	
 
 		$scope.doRefresh = function(){
 			$timeout(function() {
@@ -40,12 +56,14 @@ function ($scope, $rootScope, $state, $sce, $ionicPlatform, $stateParams, $windo
 			BusyService.show();
 			PostService.getFeedResume($scope.data.toLocaleString('en-US')).then(function(response){
 				BusyService.hide();
+				$scope.lstPostsFeedGerais = response;
 				$scope.lstPostsFeed = response;
 			});
 
 			ConteudoService.getConteudo().then(function(response){
+				$scope.lstConteudosGerais = response;
 				$scope.lstConteudos = response;
-				angular.forEach($scope.lstConteudos, function(value, key){
+				angular.forEach(response, function(value, key){
 					if(value.DS_LINK != undefined && value.DS_LINK != null && value.DS_LINK != "") value.DS_LINK = $sce.trustAsResourceUrl(value.DS_LINK);
 			    });
 			});

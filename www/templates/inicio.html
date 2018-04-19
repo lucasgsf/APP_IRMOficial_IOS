@@ -4,13 +4,13 @@
 
     <div class="row">
       <div class="col-25" ng-click="setData(-1)">
-        <center>Ontem</center>
+        <center><span class="corIRM">Ontem</span></center>
       </div>
       <div class="col-50">
         <center><span class="corIRM">{{dataText}}</span></center>
       </div>
       <div class="col-25" ng-click="setData(1)">
-        <center>Amanhã</center>
+        <center><span class="corIRM">Amanhã</span></center>
       </div>
     </div>
 
@@ -208,7 +208,7 @@
     </div>
 
     <!-- Dúvidas e Sugestões -->
-    <div class="list card">
+    <div class="list card" style="margin-bottom: 100px;">
       <ion-item class="corIRM">
         <b>Dúvidas? Sugestões? Contate-nos</b>
       </ion-item>
@@ -218,4 +218,18 @@
       </ion-item>
     </div>
   </ion-content>
+  <div class="tabs tabs-icon-top">
+    <a class="tab-item balanced" ng-click="filtrarFeed(2)">
+      <i class="icon ion-android-favorite"></i>
+      Pílula do Evangelho
+    </a>
+    <a class="tab-item corIRM" ng-click="filtrarFeed(0)">
+      <i class="icon ion-home"></i>
+      Tudo
+    </a>
+    <a class="tab-item positive" ng-click="filtrarFeed(1)">
+      <i class="icon ion-android-bulb"></i>
+      Momento do Investidor
+    </a>
+  </div>
 </ion-view>
