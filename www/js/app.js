@@ -6,14 +6,14 @@
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
 angular.module('app', 
-  ['ionic', 'oc.lazyLoad', 'app.controllers', 'app.routes', 'app.directives', 'app.services', 'angularSoundManager', 'ngCordova']
+  ['ionic', 'ionic.native', 'oc.lazyLoad', 'app.controllers', 'app.routes', 'app.directives', 'app.services', 'angularSoundManager', 'ngCordova']
 )
 
 .config(function($ionicConfigProvider, $sceDelegateProvider,$httpProvider){
   $sceDelegateProvider.resourceUrlWhitelist([ 'self','*://www.youtube.com/**', '*://player.vimeo.com/video/**']);
 })
 
-.run(function($ionicPlatform,$window,$state) {
+.run(function($ionicPlatform,$cordovaDeeplinks,$window,$state,$timeout) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
@@ -35,9 +35,32 @@ angular.module('app',
       .handleNotificationOpened(notificationOpenedCallback)
       .inFocusDisplaying(window.plugins.OneSignal.OSInFocusDisplayOption.Notification)
       .endInit();
-      
-    })
+
+    // Note: route's first argument can take any kind of object as its data,
+    // and will send along the matching object if the route matches the deeplink
+    $cordovaDeeplinks.route({
+      '/pilula/:id': {
+        target: 'menu.post',
+        parent: 'menu.inicio'
+      }
+    }).subscribe(function(match) {
+      // One of our routes matched, we will quickly navigate to our parent
+      // view to give the user a natural back button flow
+      $timeout(function() {
+        $state.go(match.$route.parent, match.$args);
+
+        // Finally, we will navigate to the deeplink page. Now the user has
+        // the 'product' view visibile, and the back button goes back to the
+        // 'products' view.
+        $timeout(function() {
+          $state.go(match.$route.target, match.$args);
+        }, 800);
+      }, 100); // Timeouts can be tweaked to customize the feel of the deeplink
+    }, function(nomatch) {
+      console.warn('No match', nomatch);
+    });
   })
+})
 
 /*
   This directive is used to disable the "drag to open" functionality of the Side-Menu

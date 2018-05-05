@@ -24,8 +24,10 @@ function ($scope, $rootScope, $state, $sce, $ionicPlatform, $stateParams, $windo
 		$scope.lstConteudosGerais = {};
 		$scope.usuario = ($window.localStorage["userData"] != undefined) ? JSON.parse($window.localStorage["userData"]) : undefined;
 		$scope.playingId = 0;
+		$scope.filtroAtivo = 0;
 
 		$scope.filtrarFeed = function(tipo){
+			$scope.filtroAtivo = tipo;
 			BusyService.show();
 			if(tipo == 0){
 				BusyService.hide();
@@ -53,6 +55,7 @@ function ($scope, $rootScope, $state, $sce, $ionicPlatform, $stateParams, $windo
 		};
 
 		function loadPage(){
+			$scope.filtroAtivo = 0;
 			BusyService.show();
 			PostService.getFeedResume($scope.data.toLocaleString('en-US')).then(function(response){
 				BusyService.hide();
@@ -524,8 +527,19 @@ function ($scope, $rootScope, $sce, $ionicPlatform, $stateParams, $window, $time
 
 		$rootScope.$watch('post', function(newValue) {
 		    $scope.post = newValue;
-			$scope.media = $cordovaMedia.newMedia("http://irmoficial.azurewebsites.net/posts/" + $scope.post.ID_POST + "/audio.mp3");
+			if($scope.post && $scope.post.ID_POST)
+				$scope.media = $cordovaMedia.newMedia("http://irmoficial.azurewebsites.net/posts/" + $scope.post.ID_POST + "/audio.mp3");
 		});
+
+		if($stateParams && $stateParams.id)
+		{
+			BusyService.show();
+			PostService.getPostDetalhado($stateParams.id).then(function(response){
+				BusyService.hide();
+				$scope.post = response;
+				$scope.media = $cordovaMedia.newMedia("http://irmoficial.azurewebsites.net/posts/" + $scope.post.ID_POST + "/audio.mp3");
+			});
+		}
 
 		$scope.playAudioPost = function(item){
 			// Reproduz o áudio
@@ -616,21 +630,19 @@ function ($scope, $rootScope, $sce, $ionicPlatform, $stateParams, $window, $time
 		};
 
 		$scope.shareAudio = function(idPost){
-			var link = "http://irmoficial.azurewebsites.net/posts/" + idPost + "/audio.mp3";
-			$scope.shareContent(null, null, link, null);
-			salvarCompartilhamento(item);
+			var url = "Clique no link para escutar o áudio: https://irmoficial.azurewebsites.net/pilula/" + idPost;
+			$scope.shareContent(url + "\n\n" + $scope.post.DS_TITULO + "\n\n" + $scope.post.DS_POST, null, null, null);
+			salvarCompartilhamento($scope.post);
 		};
 
 		$scope.shareImage = function(idPost){
-			var item = $filter('filter')($scope.lstPostsFeed, { ID_POST: idPost }, true)[0];
-			$scope.shareContent(null, null, "data:image/png;base64," + item.IM_IMAGEM, null);
-			salvarCompartilhamento(item);
+			$scope.shareContent(null, null, "data:image/png;base64," + $scope.post.IM_IMAGEM, null);
+			salvarCompartilhamento($scope.post);
 		};
 
 		$scope.shareText = function(idPost){
-			var item = $filter('filter')($scope.lstPostsFeed, { ID_POST: idPost }, true)[0];
-			$scope.shareContent(item.DS_TITULO + "\n\n" + item.DS_POST, null, null, null);
-			salvarCompartilhamento(item);
+			$scope.shareContent($scope.post.DS_TITULO + "\n\n" + $scope.post.DS_POST, null, null, null);
+			salvarCompartilhamento($scope.post);
 		};
 
 		$scope.shareContent = function(message, subject, url, link){

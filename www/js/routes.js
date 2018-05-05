@@ -26,6 +26,7 @@ angular.module('app.routes', [])
 
   .state('menu.post', {
     url: '/post',
+    params: { id: null },
     views: {
       'side-menu': {
         templateUrl: 'templates/post.html',

@@ -219,15 +219,15 @@
     </div>
   </ion-content>
   <div class="tabs tabs-icon-top">
-    <a class="tab-item balanced" ng-click="filtrarFeed(2)">
+    <a class="tab-item" ng-click="filtrarFeed(2)" ng-class="{'default': (filtroAtivo != 2), 'balanced': (filtroAtivo == 2)}">
       <i class="icon ion-android-favorite"></i>
       Pílula do Evangelho
     </a>
-    <a class="tab-item corIRM" ng-click="filtrarFeed(0)">
+    <a class="tab-item" ng-click="filtrarFeed(0)" ng-class="{'default': (filtroAtivo != 0), 'corIRM': (filtroAtivo == 0)}">
       <i class="icon ion-home"></i>
       Tudo
     </a>
-    <a class="tab-item positive" ng-click="filtrarFeed(1)">
+    <a class="tab-item" ng-click="filtrarFeed(1)" ng-class="{'default': (filtroAtivo != 1), 'positive': (filtroAtivo == 1)}">
       <i class="icon ion-android-bulb"></i>
       Momento do Investidor
     </a>

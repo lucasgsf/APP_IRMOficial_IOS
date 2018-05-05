@@ -48,6 +48,11 @@ angular.module('app.services', [])
 	            return response.data;
 	        });
 	    },
+	    getPostDetalhado: function (idPost) {
+            return $http.get('http://irmoficial.azurewebsites.net/api/Post/getPostDetalhado?id=' + idPost).then(function (response) {
+	            return response.data;
+	        });
+	    },
 	}
     return PostService;
 })
