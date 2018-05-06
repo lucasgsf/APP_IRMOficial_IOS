@@ -629,10 +629,10 @@ function ($scope, $rootScope, $sce, $ionicPlatform, $stateParams, $window, $time
 			  });
 		};
 
-		$scope.shareAudio = function(idPost){
-			var url = "Clique no link para escutar o áudio: https://irmoficial.azurewebsites.net/pilula/" + idPost;
-			$scope.shareContent(url + "\n\n" + $scope.post.DS_TITULO + "\n\n" + $scope.post.DS_POST, null, null, null);
-			salvarCompartilhamento($scope.post);
+		$scope.shareAudio = function(post){
+			var url = "Clique no link para ouvir a pílula: https://irmoficial.azurewebsites.net/pilula/" + post.ID_POST;
+			$scope.shareContent(url + "\n\n" + post.DS_TITULO + "\n\n" + post.DS_POST, null, "data:image/png;base64," + post.IM_IMAGEM, null);
+			salvarCompartilhamento(post);
 		};
 
 		$scope.shareImage = function(idPost){
